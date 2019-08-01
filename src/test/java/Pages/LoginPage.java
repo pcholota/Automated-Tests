@@ -21,6 +21,9 @@ public class LoginPage {
     @CacheLookup
     WebElement loginButton;
 
+    @FindBy(xpath = "//*[@id=\"login_form\"]/table/tbody/tr[3]/td[2]/div/a")
+    @CacheLookup
+    WebElement recoverText;
 
     public LoginPage(WebDriver driver){
         this.driver=driver;
@@ -42,6 +45,10 @@ public class LoginPage {
 
     public void clickOnLoginButton(){
         loginButton.click();
+    }
+
+    public void clickOnRecoveryPasswordText(){
+        recoverText.click();
     }
 
 }
