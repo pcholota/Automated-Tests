@@ -12,10 +12,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class LogInTest {
 
     //I should use @Before here
+    @Before
+    public void init(){
+        WebDriverManager.chromedriver().setup();
+    }
 
     @Test
     public void LogInWithCorrectLoginData(){
-        WebDriverManager.chromedriver().setup();
 
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.facebook.com/");
@@ -29,7 +32,6 @@ public class LogInTest {
     }
     @Test
     public void LogInWithNotCorrectLoginData(){
-        WebDriverManager.chromedriver().setup();
 
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.facebook.com/");
@@ -43,6 +45,53 @@ public class LogInTest {
 
         ExpectedConditions.urlContains("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110");
 
+        driver.quit();
 
+    }
+    @Test
+    public void LogInWithoutEnterAnyValue(){
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.facebook.com/");
+
+        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+        loginPage.clickOnLoginButton();
+
+        driver.quit();
+    }
+
+    @Test
+    public void LogInWithoutCorrectPassword(){
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.facebook.com/");
+
+//        //library that generates fake data
+//        Faker faker = new Faker();
+
+        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+        loginPage.loginToFacebook("CorrectEmail", "notCorrectPassword");
+
+        ExpectedConditions.urlContains("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110");
+
+        driver.quit();
+    }
+
+    @Test
+    public void RemindThePassword(){
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.facebook.com/");
+
+//        //library that generates fake data
+//        Faker faker = new Faker();
+
+        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+        loginPage.clickOnRecoveryPasswordText();
+
+        driver.quit();
     }
 }
